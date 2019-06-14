@@ -14,12 +14,12 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder;
 @Configuration
 public class DataBaseConfiguration {
 
-	@Bean
+	@Bean(name="dataSource")
 	public DataSource getDataSource()
 	{
 		BasicDataSource dataSource=new BasicDataSource();
 		dataSource.setDriverClassName("org.h2.Driver");
-		dataSource.setUrl("jdbc:h2:tcp://localhost/~/Anish123");
+		dataSource.setUrl("jdbc:h2:tcp://localhost/~/Anish1234");
 		dataSource.setUsername("user");
 		dataSource.setPassword("user");
 	return dataSource;

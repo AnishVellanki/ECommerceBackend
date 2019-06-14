@@ -2,6 +2,7 @@ package com.ani.ECommerceBackend.daoImpl;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -29,12 +30,7 @@ public class CategoryDaoImpl implements CategoryDao
 		System.out.println("~~~~~`"+factory);
 		
 		Session session=factory.openSession();
-		if(category.getCategoryId()==0)
-		{
-			System.out.println("---"+category.getCategoryId());
-		int id=(int)(Math.random()*10000);
-		category.setCategoryId(id);
-		}
+		
 		session.save(category);
 		Transaction transaction=session.beginTransaction();
 		try {
@@ -52,21 +48,82 @@ public class CategoryDaoImpl implements CategoryDao
 	}
 
 	public boolean deleteCategory(Category category) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+		
+		Session session=factory.openSession();
+		//Category category=session.get(Category.class, categoryId);
+		System.out.println("~~~~~~"+category);
+		System.out.println("~~~~~~~"+category.getCategoryId());
+		System.out.println("~~~~~~~"+category.getCategoryDescription());
+		
+		session.delete(category);
+		try
+		{
+		Transaction transaction=session.beginTransaction();
+		
+		transaction.commit();
+		return true;
+		}
+		catch(Exception e)
+		{
+			return false;
+		}
+		
+		finally
+		{
+			session.close();
+		}
+		}
+
 
 	public Category getCategory(int categoryId) {
-		// TODO Auto-generated method stub
-		return null;
+		Session session= factory.openSession();	
+		Category category=session.get(Category.class, categoryId);
+		session.close();
+		return category;
+
+	
 	}
 
 	public List<Category> getCategoryList() {
-		// TODO Auto-generated method stub
-		return null;
+		Session session=factory.openSession();
+		Query query=session.createQuery("from Category");
+		List<Category> categorylist=query.list();
+		for(Category ca:categorylist)
+		{
+			System.out.println(ca.getCategoryId());
+			System.out.println(ca.getCategoryDescription());
+			System.out.println(ca.getCategoryName());
+		}
+		session.close();
+	return  categorylist;
+	
 	}
 
 	
+	public boolean editCategory(Category category) {
+
+		
+		//ApplicationContext context=new ClassPathXmlApplicationContext("dBConfig.xml");
+		//SessionFactory sessionfactory=(SessionFactory) context.getBean("sessionFactory");
+		System.out.println("~~~~~`"+factory);
+		
+		Session session=factory.openSession();
+		
+		session.update(category);
+		Transaction transaction=session.beginTransaction();
+		try {
+			transaction.commit();
+			return true;
+		}
+		catch(Exception e)
+		{
+			return false;	
+		}
+		finally
+		{
+			session.close();
+		}
+	}
 	
 	
 

@@ -1,8 +1,10 @@
 package com.ani.ECommerceBackend.model;
 
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class User {
@@ -11,8 +13,19 @@ private String userName;
 @Id
 private String email;
 private String password;
-private String address;
+@ManyToOne(cascade = CascadeType.ALL)
+private ShippingAddress address;
+public ShippingAddress getAddress() {
+	return address;
+}
+public void setAddress(ShippingAddress address) {
+	this.address = address;
+}
 private String mobileNo;
+private String role;
+private boolean enabled;
+
+
 
 public String getUserName() {
 	return userName;
@@ -31,12 +44,6 @@ public String getPassword() {
 }
 public void setPassword(String password) {
 	this.password = password;
-}
-public String getAddress() {
-	return address;
-}
-public void setAddress(String address) {
-	this.address = address;
 }
 public String getMobileNo() {
 	return mobileNo;
@@ -58,6 +65,4 @@ public void setEnabled(boolean enabled) {
 	this.enabled = enabled;
 }
 
-private String role;
-private boolean enabled;
 }

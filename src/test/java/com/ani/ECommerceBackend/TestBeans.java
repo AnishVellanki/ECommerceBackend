@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.hibernate.SessionFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import com.ani.ECommerceBackend.daoImpl.CategoryDaoImpl;
@@ -12,6 +13,9 @@ import com.ani.ECommerceBackend.model.Category;
 
 public class TestBeans {
 
+	@Autowired
+	Category category;
+	
 	static AnnotationConfigApplicationContext context;
 	static CategoryDaoImpl categoryDaoImpl;
 	
@@ -45,4 +49,22 @@ public static void Test1()
 		category.setCategoryId(103);
 	assertEquals("success",false,categoryDaoImpl.saveCategory(category));
 	}
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~getCategoryList~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	@Test
+	public void getCategoryList_PositiveTesting()
+	{
+		Category category=new Category();
+		assertEquals("success",true,categoryDaoImpl.getCategoryList());
+		
+	}	
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	@Test
+	public void deleteCategory_PositiveTesting()
+	{
+		
+	
+		assertEquals("success",true,categoryDaoImpl.deleteCategory(category));
+		
+	}	
+
 }
